@@ -21,14 +21,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>de.perdoctus</groupId>
     <artifactId>synolib</artifactId>
     <version>1.0.3-SNAPSHOT</version>
-
-    <parent>
-        <groupId>de.perdoctus</groupId>
-        <artifactId>parent</artifactId>
-        <version>1.0.2</version>
-    </parent>
 
     <dependencies>
         <dependency>
@@ -81,23 +76,9 @@
     </licenses>
 
     <scm>
-        <connection>https://github.com/cgiesche/synolib.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/cgiesche/synolib.git</developerConnection>
+        <connection>https://github.com/tobiasge/synolib.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/tobiasge/synolib.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
-
-    <repositories>
-        <repository>
-            <name>Perdoctus Repo</name>
-            <id>perdoctus-repo</id>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <url>http://nexus.perdoctus.de/content/groups/perdoctus/</url>
-        </repository>
-    </repositories>
 
 </project>

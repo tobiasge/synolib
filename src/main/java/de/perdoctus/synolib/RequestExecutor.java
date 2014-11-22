@@ -38,6 +38,7 @@ import javax.net.ssl.SSLSocket;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -51,7 +52,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.exc.UnrecognizedPropertyException;
 
 import de.perdoctus.synolib.exceptions.CommunicationException;
 import de.perdoctus.synolib.exceptions.SynoException;
@@ -190,16 +190,18 @@ public class RequestExecutor {
         }
 
         String content = "";
-        final T drResponse;
         try {
             content = EntityUtils.toString(entity);
+        } catch (ParseException | IOException ex) {
+            throw new CommunicationException("Could not read response body from HTTP entity!", ex);
+        }
+
+        final T drResponse;
+
+        try {
             drResponse = mapper.readValue(content, clazz);
-        } catch (final UnrecognizedPropertyException ex) {
-            throw new CommunicationException("Failed to parse JSON response!", ex);
-        } catch (final IOException ex) {
-            throw new CommunicationException("Could not read response body!", ex);
-        } catch (final IllegalStateException ex) {
-            throw new CommunicationException("Could not read response body stream!", ex);
+        } catch (IOException ex) {
+            throw new CommunicationException("Failed to parse JSON response!" + content, ex);
         }
 
         return drResponse;

@@ -23,6 +23,10 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +43,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.conn.ssl.SSLContextBuilder;
+import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
@@ -93,26 +99,33 @@ public class RequestExecutor {
         LOG.debug("Executing DR-Request: " + drRequest.getClass().getSimpleName());
 
         if (this.httpClient == null) {
+            try {
+                this.httpClient = HttpClientBuilder.create().setHostnameVerifier(new X509HostnameVerifier() {
 
-            this.httpClient = HttpClientBuilder.create().setHostnameVerifier(new X509HostnameVerifier() {
+                    @Override
+                    public boolean verify(String arg0, SSLSession arg1) {
+                        return true;
+                    }
 
-                @Override
-                public boolean verify(String arg0, SSLSession arg1) {
-                    return true;
-                }
+                    @Override
+                    public void verify(String host, String[] cns, String[] subjectAlts) throws SSLException {
+                    }
 
-                @Override
-                public void verify(String host, String[] cns, String[] subjectAlts) throws SSLException {
-                }
+                    @Override
+                    public void verify(String host, X509Certificate cert) throws SSLException {
+                    }
 
-                @Override
-                public void verify(String host, X509Certificate cert) throws SSLException {
-                }
-
-                @Override
-                public void verify(String host, SSLSocket ssl) throws IOException {
-                }
-            }).build();
+                    @Override
+                    public void verify(String host, SSLSocket ssl) throws IOException {
+                    }
+                }).setSslcontext(new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
+                    public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                        return true;
+                    }
+                }).build()).build();
+            } catch (KeyManagementException | NoSuchAlgorithmException | KeyStoreException ex) {
+                throw new CommunicationException("Could not build HTTP Client!", ex);
+            }
         }
 
         final HttpUriRequest request;

@@ -23,7 +23,10 @@ package de.perdoctus.synolib.exceptions;
  * @author Christoph Giesche
  */
 public class CommunicationException extends SynoException {
-	public CommunicationException(final String message) {
+
+    private static final long serialVersionUID = -7088767533711227884L;
+
+    public CommunicationException(final String message) {
 		super(message);
 	}
 

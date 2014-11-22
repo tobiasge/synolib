@@ -23,7 +23,10 @@ package de.perdoctus.synolib.exceptions;
  * @author Christoph Giesche
  */
 public class SynoException extends Exception {
-	public SynoException(final String message) {
+
+    private static final long serialVersionUID = -420449386592750044L;
+
+    public SynoException(final String message) {
 		super(message);
 	}
 

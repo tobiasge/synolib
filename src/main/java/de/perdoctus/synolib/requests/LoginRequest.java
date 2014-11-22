@@ -19,19 +19,23 @@
 
 package de.perdoctus.synolib.requests;
 
+import de.perdoctus.synolib.RequestExecutor;
+
 /**
  * @author Christoph Giesche
  */
 public class LoginRequest extends DownloadRedirectorRequest {
 
-    private final static String ACTION = "login";
+    public LoginRequest(final String username, final String password) {
+        super("GET");
 
-	public LoginRequest(final String username, final String password) {
-		super("POST");
-
-        requestParams.add(new KeyValue("action", ACTION));
-        requestParams.add(new KeyValue("username", username));
+        requestParams.add(new KeyValue("account", username));
         requestParams.add(new KeyValue("passwd", password));
+        requestParams.add(new KeyValue("session", "DownloadStation"));
+        requestParams.add(new KeyValue("format", "sid"));
+        requestParams.add(new KeyValue("method", "login"));
+        requestParams.add(new KeyValue("version", RequestExecutor.LOGIN_API_VERSION));
+        requestParams.add(new KeyValue("api", RequestExecutor.LOGIN_API_NAME));
     }
 
 }

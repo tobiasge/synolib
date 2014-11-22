@@ -25,23 +25,17 @@ import org.codehaus.jackson.annotate.JsonProperty;
  * @author Christoph Giesche
  */
 public class LoginResponse extends DownloadRedirectorResponse {
-	private String id;
-	@JsonProperty("login_success")
-	private boolean loginSuccess;
 
-	public String getId() {
-		return id;
-	}
+    private static class Data {
 
-	public void setId(final String id) {
-		this.id = id;
-	}
+        @JsonProperty("sid")
+        private String sid;
+    }
 
-	public boolean isLoginSuccess() {
-		return loginSuccess;
-	}
+    @JsonProperty("data")
+    private Data data;
 
-	public void setLoginSuccess(final boolean loginSuccess) {
-		this.loginSuccess = loginSuccess;
-	}
+    public String getSid() {
+        return this.data.sid;
+    }
 }

@@ -19,6 +19,7 @@
 
 package de.perdoctus.synolib.requests;
 
+import de.perdoctus.synolib.RequestExecutor;
 import de.perdoctus.synolib.responses.LoginResponse;
 
 import java.net.URI;
@@ -29,35 +30,37 @@ import java.net.URL;
  */
 public class AddUrlRequest extends DownloadRedirectorRequest {
 
-    private final static String ACTION = "addurl";
-
-	public AddUrlRequest(final URI uri, final String sessionId) {
-		super("POST");
+    public AddUrlRequest(final URI uri, final String sessionId) {
+        super("POST");
 
         setParams(uri.toString(), sessionId);
     }
 
-	public AddUrlRequest(final URI uri, final LoginResponse loginResponse) {
-		super("POST");
+    public AddUrlRequest(final URI uri, final LoginResponse loginResponse) {
+        super("POST");
 
-        setParams(uri.toString(), loginResponse.getId());
+        setParams(uri.toString(), loginResponse.getSid());
     }
 
-	public AddUrlRequest(final URL url, final String sessionId) {
-		super("POST");
+    public AddUrlRequest(final URL url, final String sessionId) {
+        super("POST");
 
         setParams(url.toString(), sessionId);
     }
 
-	public AddUrlRequest(final URL url, final LoginResponse loginResponse) {
-		super("POST");
+    public AddUrlRequest(final URL url, final LoginResponse loginResponse) {
+        super("POST");
 
-        setParams(url.toString(), loginResponse.getId());
+        setParams(url.toString(), loginResponse.getSid());
     }
 
-	private void setParams(final String url, final String sessionId) {
-		requestParams.add(new KeyValue("action", ACTION));
-        requestParams.add(new KeyValue("id", sessionId));
-        requestParams.add(new KeyValue("url", url));
+    private void setParams(final String url, final String sessionId) {
+        
+        requestParams.add(new KeyValue("_sid", sessionId));
+        requestParams.add(new KeyValue("uri", url));
+        requestParams.add(new KeyValue("method", "create"));
+        requestParams.add(new KeyValue("version", RequestExecutor.TASK_API_VERSION));
+        requestParams.add(new KeyValue("api", RequestExecutor.TASK_API_NAME));
+
     }
 }

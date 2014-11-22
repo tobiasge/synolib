@@ -31,7 +31,7 @@ public class GetAllRequest extends DownloadRedirectorRequest {
 	public GetAllRequest(final LoginResponse response) {
 		super("GET");
 
-		setParams(response.getId());
+		setParams(response.getSid());
 	}
 
 	public GetAllRequest(final String sessionId) {

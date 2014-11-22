@@ -19,26 +19,35 @@
 
 package de.perdoctus.synolib.responses;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 /**
  * @author Christoph Giesche
  */
 public abstract class DownloadRedirectorResponse {
-	private boolean success;
-	private String errcode;
 
-	public boolean isSuccess() {
-		return success;
-	}
+    @JsonProperty("success")
+    private boolean success;
 
-	public void setSuccess(final boolean success) {
-		this.success = success;
-	}
+    private static class Error {
 
-	public String getErrcode() {
-		return errcode;
-	}
+        @JsonProperty("code")
+        private String code;
+    }
 
-	public void setErrcode(final String errcode) {
-		this.errcode = errcode;
-	}
+    @JsonProperty("error")
+    private Error error;
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(final boolean success) {
+        this.success = success;
+    }
+
+    public String getErrcode() {
+        return error.code;
+    }
+
 }

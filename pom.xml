@@ -26,7 +26,6 @@
     <version>1.0.3-SNAPSHOT</version>
 
     <properties>
-        <eclipse.projectDir>D:\Coding\WorkSpace\</eclipse.projectDir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <app.version>${project.version}</app.version>
     </properties>

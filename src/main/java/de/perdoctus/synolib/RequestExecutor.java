@@ -50,7 +50,8 @@ import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import de.perdoctus.synolib.exceptions.CommunicationException;
@@ -86,7 +87,7 @@ public class RequestExecutor {
 
     public final static String TASK_API_VERSION = "1";
 
-    private static final Logger LOG = Logger.getLogger(RequestExecutor.class);
+    private static final Logger LOG = LogManager.getLogger(RequestExecutor.class);
 
     public RequestExecutor(final URI targetURI) throws URISyntaxException {
         this.loginURI = new URI(targetURI.toString() + LOGIN_API_PATH);
@@ -99,33 +100,7 @@ public class RequestExecutor {
         LOG.debug("Executing DR-Request: " + drRequest.getClass().getSimpleName());
 
         if (this.httpClient == null) {
-            try {
-                this.httpClient = HttpClientBuilder.create().setHostnameVerifier(new X509HostnameVerifier() {
-
-                    @Override
-                    public boolean verify(String arg0, SSLSession arg1) {
-                        return true;
-                    }
-
-                    @Override
-                    public void verify(String host, String[] cns, String[] subjectAlts) throws SSLException {
-                    }
-
-                    @Override
-                    public void verify(String host, X509Certificate cert) throws SSLException {
-                    }
-
-                    @Override
-                    public void verify(String host, SSLSocket ssl) throws IOException {
-                    }
-                }).setSslcontext(new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
-                    public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-                        return true;
-                    }
-                }).build()).build();
-            } catch (KeyManagementException | NoSuchAlgorithmException | KeyStoreException ex) {
-                throw new CommunicationException("Could not build HTTP Client!", ex);
-            }
+            this.buildHTTPClient();
         }
 
         final HttpUriRequest request;
@@ -205,5 +180,35 @@ public class RequestExecutor {
         }
 
         return drResponse;
+    }
+
+    private void buildHTTPClient() throws CommunicationException {
+        try {
+            this.httpClient = HttpClientBuilder.create().setHostnameVerifier(new X509HostnameVerifier() {
+
+                @Override
+                public boolean verify(String arg0, SSLSession arg1) {
+                    return true;
+                }
+
+                @Override
+                public void verify(String host, String[] cns, String[] subjectAlts) throws SSLException {
+                }
+
+                @Override
+                public void verify(String host, X509Certificate cert) throws SSLException {
+                }
+
+                @Override
+                public void verify(String host, SSLSocket ssl) throws IOException {
+                }
+            }).setSslcontext(new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
+                public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                    return true;
+                }
+            }).build()).build();
+        } catch (KeyManagementException | NoSuchAlgorithmException | KeyStoreException ex) {
+            throw new CommunicationException("Could not build HTTP Client!", ex);
+        }
     }
 }

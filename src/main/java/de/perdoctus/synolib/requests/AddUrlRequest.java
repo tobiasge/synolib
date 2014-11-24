@@ -61,6 +61,7 @@ public class AddUrlRequest extends DownloadRedirectorRequest {
         requestParams.add(new KeyValue("method", "create"));
         requestParams.add(new KeyValue("version", RequestExecutor.TASK_API_VERSION));
         requestParams.add(new KeyValue("api", RequestExecutor.TASK_API_NAME));
-
+        
+        this.setRequestURI("/webapi/DownloadStation/task.cgi");
     }
 }

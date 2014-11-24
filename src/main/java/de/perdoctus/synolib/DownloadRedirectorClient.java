@@ -46,7 +46,7 @@ public class DownloadRedirectorClient {
 
     }
 
-    public DownloadRedirectorClient(final String username, final String password, final URI synoUri)
+    public DownloadRedirectorClient(final String username, final String password, final String synoUri)
         throws URISyntaxException {
 
         this.password = password;
@@ -77,7 +77,7 @@ public class DownloadRedirectorClient {
         this.username = username;
     }
 
-    public void setSynoUri(final URI uri) throws URISyntaxException {
+    public void setSynoUri(final String uri) throws URISyntaxException {
         this.executor = new RequestExecutor(uri);
     }
 

@@ -36,6 +36,7 @@ public class LoginRequest extends DownloadRedirectorRequest {
         requestParams.add(new KeyValue("method", "login"));
         requestParams.add(new KeyValue("version", RequestExecutor.LOGIN_API_VERSION));
         requestParams.add(new KeyValue("api", RequestExecutor.LOGIN_API_NAME));
+        this.setRequestURI("/webapi/auth.cgi");
     }
 
 }

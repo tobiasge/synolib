@@ -21,7 +21,6 @@ package de.perdoctus.synolib;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -56,10 +55,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import de.perdoctus.synolib.exceptions.CommunicationException;
 import de.perdoctus.synolib.exceptions.SynoException;
-import de.perdoctus.synolib.requests.AddUrlRequest;
 import de.perdoctus.synolib.requests.DownloadRedirectorRequest;
 import de.perdoctus.synolib.requests.KeyValue;
-import de.perdoctus.synolib.requests.LoginRequest;
 import de.perdoctus.synolib.responses.DownloadRedirectorResponse;
 
 /**
@@ -71,17 +68,11 @@ public class RequestExecutor {
 
     private HttpClient httpClient;
 
-    private final URI loginURI;
-
-    private final URI taskURI;
-
-    public final static String LOGIN_API_PATH = "/webapi/auth.cgi";
+    private String targetURI;
 
     public final static String LOGIN_API_NAME = "SYNO.API.Auth";
 
     public final static String LOGIN_API_VERSION = "2";
-
-    public final static String TASK_API_PATH = "/webapi/DownloadStation/task.cgi";
 
     public final static String TASK_API_NAME = "SYNO.DownloadStation.Task";
 
@@ -89,9 +80,8 @@ public class RequestExecutor {
 
     private static final Logger LOG = LogManager.getLogger(RequestExecutor.class);
 
-    public RequestExecutor(final URI targetURI) throws URISyntaxException {
-        this.loginURI = new URI(targetURI.toString() + LOGIN_API_PATH);
-        this.taskURI = new URI(targetURI.toString() + TASK_API_PATH);
+    public RequestExecutor(String targetURI) throws URISyntaxException {
+        this.targetURI = targetURI;
     }
 
     public <T extends DownloadRedirectorResponse> T executeRequest(final DownloadRedirectorRequest drRequest,
@@ -105,14 +95,8 @@ public class RequestExecutor {
 
         final HttpUriRequest request;
         if (drRequest.getHttpMethod().equalsIgnoreCase("POST")) {
-            final HttpPost postRequest;
-            if (drRequest.getClass().equals(LoginRequest.class)) {
-                postRequest = new HttpPost(loginURI);
-            } else if (drRequest.getClass().equals(AddUrlRequest.class)) {
-                postRequest = new HttpPost(taskURI);
-            } else {
-                throw new RuntimeException("Method " + drRequest.getClass() + " not supported yet!");
-            }
+
+            final HttpPost postRequest = new HttpPost(this.targetURI + drRequest.getRequestURI());
 
             final List<NameValuePair> params = new ArrayList<NameValuePair>();
             for (final KeyValue param : drRequest.getRequestParams()) {
@@ -129,19 +113,13 @@ public class RequestExecutor {
             postRequest.setEntity(entity);
             request = postRequest;
         } else if (drRequest.getHttpMethod().equalsIgnoreCase("GET")) {
-            final HttpGet getRequest;
-            if (drRequest.getClass().equals(LoginRequest.class)) {
-                String params = "?";
-                for (KeyValue kv : drRequest.getRequestParams()) {
-                    params = params + kv.getKey() + "=" + kv.getValue() + "&";
-                }
-                getRequest = new HttpGet(loginURI.toString() + params);
-            } else if (drRequest.getClass().equals(AddUrlRequest.class)) {
-                getRequest = new HttpGet(taskURI);
-            } else {
-                throw new RuntimeException("Method " + drRequest.getClass() + " not supported yet!");
+
+            String params = "?";
+            for (KeyValue kv : drRequest.getRequestParams()) {
+                params = params + kv.getKey() + "=" + kv.getValue() + "&";
             }
-            request = getRequest;
+
+            request = new HttpGet(this.targetURI + drRequest.getRequestURI() + params);
         } else {
             throw new RuntimeException("Method " + drRequest.getHttpMethod() + " not supported yet!");
         }

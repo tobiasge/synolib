@@ -19,7 +19,6 @@
 
 package de.perdoctus.synolib.requests;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,19 +27,29 @@ import java.util.Set;
  */
 public abstract class DownloadRedirectorRequest {
 
-	protected final Set<KeyValue> requestParams = new HashSet<KeyValue>();
+    protected final Set<KeyValue> requestParams = new HashSet<KeyValue>();
 
-	private final String httpMethod;
+    private final String httpMethod;
 
-	public DownloadRedirectorRequest(final String httpMethod) {
-		this.httpMethod = httpMethod;
-	}
+    private String requestURI;
 
-	public String getHttpMethod() {
-		return this.httpMethod;
-	}
+    public String getRequestURI() {
+        return this.requestURI;
+    }
 
-	public Set<KeyValue> getRequestParams() {
-		return requestParams;
-	}
+    public void setRequestURI(String requestURI) {
+        this.requestURI = requestURI;
+    }
+
+    public DownloadRedirectorRequest(final String httpMethod) {
+        this.httpMethod = httpMethod;
+    }
+
+    public String getHttpMethod() {
+        return this.httpMethod;
+    }
+
+    public Set<KeyValue> getRequestParams() {
+        return requestParams;
+    }
 }

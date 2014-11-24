@@ -28,6 +28,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <app.version>${project.version}</app.version>
+        <eclipse.testSourcesLast>true</eclipse.testSourcesLast>
     </properties>
 
     <dependencies>
@@ -61,6 +62,14 @@
             <artifactId>log4j-core</artifactId>
             <version>2.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="30">
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="[%t] %p{WARN=W, DEBUG=D, ERROR=E, TRACE=T, INFO=I} %c - %m%n" />
+		</Console>
+	</Appenders>
+	<Loggers>
+		<Logger name="de.perdoctus" level="trace">
+		</Logger>
+		<Root level="warn">
+			<AppenderRef ref="Console" />
+		</Root>
+	</Loggers>
+</Configuration>

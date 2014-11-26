@@ -101,7 +101,6 @@ public class RequestExecutor {
             String params = "?";
             params += URLEncodedUtils.format(drRequest.getRequestParams(), Charset.forName("UTF-8"));
             request = new HttpGet(this.targetURI + drRequest.getRequestURI() + params);
-            LOG.trace("URL is now:\n" + request.getURI());
         } else {
             throw new RuntimeException("Method " + drRequest.getHttpMethod() + " not supported yet!");
         }

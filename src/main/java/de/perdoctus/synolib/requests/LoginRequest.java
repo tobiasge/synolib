@@ -19,6 +19,8 @@
 
 package de.perdoctus.synolib.requests;
 
+import org.apache.http.message.BasicNameValuePair;
+
 import de.perdoctus.synolib.RequestExecutor;
 
 /**
@@ -29,13 +31,13 @@ public class LoginRequest extends DownloadRedirectorRequest {
     public LoginRequest(final String username, final String password) {
         super("GET");
 
-        requestParams.add(new KeyValue("account", username));
-        requestParams.add(new KeyValue("passwd", password));
-        requestParams.add(new KeyValue("session", "DownloadStation"));
-        requestParams.add(new KeyValue("format", "sid"));
-        requestParams.add(new KeyValue("method", "login"));
-        requestParams.add(new KeyValue("version", RequestExecutor.LOGIN_API_VERSION));
-        requestParams.add(new KeyValue("api", RequestExecutor.LOGIN_API_NAME));
+        requestParams.add(new BasicNameValuePair("account", username));
+        requestParams.add(new BasicNameValuePair("passwd", password));
+        requestParams.add(new BasicNameValuePair("session", "DownloadStation"));
+        requestParams.add(new BasicNameValuePair("format", "sid"));
+        requestParams.add(new BasicNameValuePair("method", "login"));
+        requestParams.add(new BasicNameValuePair("version", RequestExecutor.LOGIN_API_VERSION));
+        requestParams.add(new BasicNameValuePair("api", RequestExecutor.LOGIN_API_NAME));
         this.setRequestURI("/webapi/auth.cgi");
     }
 

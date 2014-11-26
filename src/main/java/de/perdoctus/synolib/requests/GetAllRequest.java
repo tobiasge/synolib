@@ -19,6 +19,8 @@
 
 package de.perdoctus.synolib.requests;
 
+import org.apache.http.message.BasicNameValuePair;
+
 import de.perdoctus.synolib.responses.LoginResponse;
 
 /**
@@ -41,7 +43,7 @@ public class GetAllRequest extends DownloadRedirectorRequest {
 	}
 
 	private void setParams(final String sessionId) {
-		requestParams.add(new KeyValue("action", ACTION));
-		requestParams.add(new KeyValue("id", sessionId));
+		requestParams.add(new BasicNameValuePair("action", ACTION));
+		requestParams.add(new BasicNameValuePair("id", sessionId));
 	}
 }

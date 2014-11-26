@@ -22,12 +22,14 @@ package de.perdoctus.synolib.requests;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.http.message.BasicNameValuePair;
+
 /**
  * @author Christoph Giesche
  */
 public abstract class DownloadRedirectorRequest {
 
-    protected final Set<KeyValue> requestParams = new HashSet<KeyValue>();
+    protected final Set<BasicNameValuePair> requestParams = new HashSet<BasicNameValuePair>();
 
     private final String httpMethod;
 
@@ -49,7 +51,7 @@ public abstract class DownloadRedirectorRequest {
         return this.httpMethod;
     }
 
-    public Set<KeyValue> getRequestParams() {
+    public Set<BasicNameValuePair> getRequestParams() {
         return requestParams;
     }
 }

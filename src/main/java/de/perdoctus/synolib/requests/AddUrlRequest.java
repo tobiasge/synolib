@@ -19,11 +19,13 @@
 
 package de.perdoctus.synolib.requests;
 
-import de.perdoctus.synolib.RequestExecutor;
-import de.perdoctus.synolib.responses.LoginResponse;
-
 import java.net.URI;
 import java.net.URL;
+
+import org.apache.http.message.BasicNameValuePair;
+
+import de.perdoctus.synolib.RequestExecutor;
+import de.perdoctus.synolib.responses.LoginResponse;
 
 /**
  * @author Christoph Giesche
@@ -56,11 +58,11 @@ public class AddUrlRequest extends DownloadRedirectorRequest {
 
     private void setParams(final String url, final String sessionId) {
         
-        requestParams.add(new KeyValue("_sid", sessionId));
-        requestParams.add(new KeyValue("uri", url));
-        requestParams.add(new KeyValue("method", "create"));
-        requestParams.add(new KeyValue("version", RequestExecutor.TASK_API_VERSION));
-        requestParams.add(new KeyValue("api", RequestExecutor.TASK_API_NAME));
+        requestParams.add(new BasicNameValuePair("_sid", sessionId));
+        requestParams.add(new BasicNameValuePair("uri", url));
+        requestParams.add(new BasicNameValuePair("method", "create"));
+        requestParams.add(new BasicNameValuePair("version", RequestExecutor.TASK_API_VERSION));
+        requestParams.add(new BasicNameValuePair("api", RequestExecutor.TASK_API_NAME));
         
         this.setRequestURI("/webapi/DownloadStation/task.cgi");
     }

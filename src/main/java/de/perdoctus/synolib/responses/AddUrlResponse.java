@@ -19,7 +19,7 @@
 
 package de.perdoctus.synolib.responses;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Christoph Giesche

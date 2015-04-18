@@ -28,9 +28,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
-import javax.net.ssl.SSLException;
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocket;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -41,14 +40,14 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustStrategy;
-import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.codehaus.jackson.map.ObjectMapper;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.perdoctus.synolib.exceptions.CommunicationException;
 import de.perdoctus.synolib.exceptions.SynoException;
@@ -143,23 +142,11 @@ public class RequestExecutor {
 
     private void buildHTTPClient() throws CommunicationException {
         try {
-            this.httpClient = HttpClientBuilder.create().setHostnameVerifier(new X509HostnameVerifier() {
+            this.httpClient = HttpClientBuilder.create().setSSLHostnameVerifier(new HostnameVerifier() {
 
                 @Override
-                public boolean verify(String arg0, SSLSession arg1) {
+                public boolean verify(String hostname, SSLSession session) {
                     return true;
-                }
-
-                @Override
-                public void verify(String host, String[] cns, String[] subjectAlts) throws SSLException {
-                }
-
-                @Override
-                public void verify(String host, X509Certificate cert) throws SSLException {
-                }
-
-                @Override
-                public void verify(String host, SSLSocket ssl) throws IOException {
                 }
             }).setSslcontext(new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
                 public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {

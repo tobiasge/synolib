@@ -4,3 +4,4 @@ target
 .classpath
 *.iml
 .idea
+src/test/resources/local.properties

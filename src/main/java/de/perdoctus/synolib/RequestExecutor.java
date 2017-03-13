@@ -112,7 +112,8 @@ public class RequestExecutor {
         }
 
         if (response.getStatusLine().getStatusCode() != 200) {
-            throw new CommunicationException(response.getStatusLine().getReasonPhrase());
+            throw new CommunicationException(response.getStatusLine().getStatusCode() + ": "
+                + response.getStatusLine().getReasonPhrase() + " from: " + this.targetURI);
         }
 
         final ObjectMapper mapper = new ObjectMapper();

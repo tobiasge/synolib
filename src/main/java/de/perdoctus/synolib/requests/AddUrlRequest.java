@@ -33,25 +33,25 @@ import de.perdoctus.synolib.responses.LoginResponse;
 public class AddUrlRequest extends DownloadRedirectorRequest {
 
     public AddUrlRequest(final URI uri, final String sessionId) {
-        super("POST");
+        super("POST", "/webapi/DownloadStation/task.cgi");
 
         setParams(uri.toString(), sessionId);
     }
 
     public AddUrlRequest(final URI uri, final LoginResponse loginResponse) {
-        super("POST");
+        super("POST", "/webapi/DownloadStation/task.cgi");
 
         setParams(uri.toString(), loginResponse.getSid());
     }
 
     public AddUrlRequest(final URL url, final String sessionId) {
-        super("POST");
+        super("POST", "/webapi/DownloadStation/task.cgi");
 
         setParams(url.toString(), sessionId);
     }
 
     public AddUrlRequest(final URL url, final LoginResponse loginResponse) {
-        super("POST");
+        super("POST", "/webapi/DownloadStation/task.cgi");
 
         setParams(url.toString(), loginResponse.getSid());
     }
@@ -63,7 +63,5 @@ public class AddUrlRequest extends DownloadRedirectorRequest {
         requestParams.add(new BasicNameValuePair("method", "create"));
         requestParams.add(new BasicNameValuePair("version", RequestExecutor.TASK_API_VERSION));
         requestParams.add(new BasicNameValuePair("api", RequestExecutor.TASK_API_NAME));
-        
-        this.setRequestURI("/webapi/DownloadStation/task.cgi");
     }
 }

@@ -33,18 +33,15 @@ public abstract class DownloadRedirectorRequest {
 
     private final String httpMethod;
 
-    private String requestURI;
+    private final String requestURI;
 
     public String getRequestURI() {
         return this.requestURI;
     }
 
-    public void setRequestURI(String requestURI) {
-        this.requestURI = requestURI;
-    }
-
-    public DownloadRedirectorRequest(final String httpMethod) {
+    public DownloadRedirectorRequest(final String httpMethod, final String requestURI) {
         this.httpMethod = httpMethod;
+        this.requestURI = requestURI;
     }
 
     public String getHttpMethod() {

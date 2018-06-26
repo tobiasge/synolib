@@ -30,6 +30,7 @@
         <app.version>${project.version}</app.version>
         <eclipse.testSourcesLast>true</eclipse.testSourcesLast>
         <log4j.version>2.11.0</log4j.version>
+        <jackson.version>2.9.6</jackson.version>
     </properties>
 
     <dependencies>
@@ -41,12 +42,12 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.9.5</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.9.5</version>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

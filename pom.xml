@@ -23,13 +23,13 @@
 
     <groupId>de.perdoctus</groupId>
     <artifactId>synolib</artifactId>
-    <version>1.1.9</version>
+    <version>1.1.10</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <app.version>${project.version}</app.version>
         <eclipse.testSourcesLast>true</eclipse.testSourcesLast>
-        <log4j.version>2.11.1</log4j.version>
+        <log4j.version>2.11.2</log4j.version>
         <jackson.version>2.9.8</jackson.version>
     </properties>
 

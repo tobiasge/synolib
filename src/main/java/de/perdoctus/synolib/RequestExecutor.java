@@ -149,7 +149,7 @@ public class RequestExecutor {
                 public boolean verify(String hostname, SSLSession session) {
                     return true;
                 }
-            }).setSslcontext(new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
+            }).setSSLContext(new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
                 public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
                     return true;
                 }
